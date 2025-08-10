@@ -18,7 +18,7 @@
         }
 @:}
 @:
-@:<h1>@Model.ViewName</h1>
+@:<h1 class="text-3xl font-bold text-gray-900 mb-6">@Model.ViewName</h1>
 @:
     }
     else
@@ -33,17 +33,31 @@
 @:<head>
     @:<meta name="viewport" content="width=device-width" />
     @:<title>@Model.ViewName</title>
+    @:<script src="https://cdn.tailwindcss.com"></script>
 @:</head>
-@:<body>
+@:<body class="bg-gray-50">
+@:<div class="container mx-auto px-4 py-8">
 @:
         //    PushIndent("    ");
     }
-@:<h4>@Model.ViewDataTypeShortName</h4>
-@:<hr />
-@:<div class="row">
-    @:<div class="col-md-4">
-        @:<form asp-action="@Model.ViewName">
-            @:<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+@:<div class="bg-white shadow-lg rounded-lg p-6">
+    @:<div class="flex items-center mb-6">
+        @:<div class="flex-shrink-0">
+            @:<div class="flex items-center justify-center h-10 w-10 rounded-full bg-blue-100">
+                @:<svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    @:<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                @:</svg>
+            @:</div>
+        @:</div>
+        @:<div class="ml-4">
+            @:<h4 class="text-xl font-semibold text-gray-900">Edit @Model.ViewDataTypeShortName</h4>
+            @:<p class="text-sm text-gray-600">Update the information for this @Model.ViewDataTypeShortName</p>
+        @:</div>
+    @:</div>
+    @:<hr class="border-gray-200 mb-6" />
+    @:<div class="max-w-lg">
+        @:<form asp-action="@Model.ViewName" class="space-y-6">
+            @:<div asp-validation-summary="ModelOnly" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4"></div>
         foreach (PropertyMetadata property in Model.ModelMetadata.Properties)
         {
             if (property.IsPrimaryKey)
@@ -62,9 +76,9 @@
                 if (property.IsForeignKey)
                 {
             @:<div class="form-group">
-                @:<label asp-for="@property.PropertyName" class="control-label"></label>
-                @:<select asp-for="@property.PropertyName" class="form-control" asp-items="ViewBag.@property.PropertyName"></select>
-                @:<span asp-validation-for="@property.PropertyName" class="text-danger"></span>
+                @:<label asp-for="@property.PropertyName" class="block text-sm font-medium text-gray-700 mb-2"></label>
+                @:<select asp-for="@property.PropertyName" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" asp-items="ViewBag.@property.PropertyName"></select>
+                @:<span asp-validation-for="@property.PropertyName" class="text-red-600 text-sm mt-1 block"></span>
             @:</div>
                     continue;
                 }
@@ -72,34 +86,33 @@
                 bool isCheckbox = property.TypeName.Equals("System.Boolean");
                 if (isCheckbox)
                 {
-            @:<div class="form-group form-check">
-                @:<label class="form-check-label">
-                    @:<input class="form-check-input" asp-for="@property.PropertyName" /> @@Html.DisplayNameFor(model => model.@GetValueExpression(property))
-                @:</label>
+            @:<div class="flex items-center">
+                @:<input class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" type="checkbox" asp-for="@property.PropertyName" />
+                @:<label class="ml-2 block text-sm text-gray-700">@@Html.DisplayNameFor(model => model.@GetValueExpression(property))</label>
             @:</div>
                 }
                 else if (property.IsEnum && !property.IsEnumFlags)
                 {
             @:<div class="form-group">
-                @:<label asp-for="@property.PropertyName" class="control-label"></label>
-                @:<select asp-for="@property.PropertyName" class="form-control"></select>
-                @:<span asp-validation-for="@property.PropertyName" class="text-danger"></span>
+                @:<label asp-for="@property.PropertyName" class="block text-sm font-medium text-gray-700 mb-2"></label>
+                @:<select asp-for="@property.PropertyName" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></select>
+                @:<span asp-validation-for="@property.PropertyName" class="text-red-600 text-sm mt-1 block"></span>
             @:</div>
                 }
                 else if (property.IsMultilineText)
                 {
             @:<div class="form-group">
-                @:<label asp-for="@property.PropertyName" class="control-label"></label>
-                @:<textarea asp-for="@property.PropertyName" class="form-control"></textarea>
-                @:<span asp-validation-for="@property.PropertyName" class="text-danger"></span>
+                @:<label asp-for="@property.PropertyName" class="block text-sm font-medium text-gray-700 mb-2"></label>
+                @:<textarea asp-for="@property.PropertyName" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 h-32 resize-vertical"></textarea>
+                @:<span asp-validation-for="@property.PropertyName" class="text-red-600 text-sm mt-1 block"></span>
             @:</div>
                 }
                 else
                 {
             @:<div class="form-group">
-                @:<label asp-for="@property.PropertyName" class="control-label"></label>
-                @:<input asp-for="@property.PropertyName" class="form-control" />
-                @:<span asp-validation-for="@property.PropertyName" class="text-danger"></span>
+                @:<label asp-for="@property.PropertyName" class="block text-sm font-medium text-gray-700 mb-2"></label>
+                @:<input asp-for="@property.PropertyName" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                @:<span asp-validation-for="@property.PropertyName" class="text-red-600 text-sm mt-1 block"></span>
             @:</div>
                 }
             }
@@ -111,16 +124,34 @@
             }
         }
     }
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+            @:<div class="flex items-center justify-between pt-6 border-t border-gray-200">
+                @:<div class="flex items-center space-x-4">
+                    @:<button type="submit" class="inline-flex items-center px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200">
+                        @:<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            @:<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        @:</svg>
+                        @:Save Changes
+                    @:</button>
+                    @:<a asp-action="Index" class="inline-flex items-center text-gray-600 hover:text-gray-800 font-medium transition duration-200">
+                        @:<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            @:<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        @:</svg>
+                        @:Cancel
+                    @:</a>
+                @:</div>
+            @:</div>
+        @:</form>
+    @:</div>
+@:</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@:<div class="mt-6">
+    @:<a asp-action="Index" class="text-blue-600 hover:text-blue-800 font-medium transition duration-200 inline-flex items-center">
+        @:<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            @:<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        @:</svg>
+        @:Back to List
+    @:</a>
+@:</div>
 
 @{
     if (Model.ReferenceScriptLibraries)
@@ -132,10 +163,12 @@
     // The following code closes the tag used in the case of a view using a layout page and the body and html tags in the case of a regular view page
     if (!Model.IsPartialView && !Model.IsLayoutPageSelected)
     {
+@:</div>
 @:</body>
 @:</html>
     }
 }
+
 @functions
 {
     string GetAssociationName(IPropertyMetadata property)

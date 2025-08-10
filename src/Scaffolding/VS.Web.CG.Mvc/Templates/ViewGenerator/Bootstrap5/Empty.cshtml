@@ -21,7 +21,43 @@
         }
 @:}
 @:
-@:<h1>@Model.ViewName</h1>
+@:<div class="min-h-screen bg-gray-50">
+    @:<div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        @:<div class="text-center">
+            @:<h1 class="text-4xl font-bold text-gray-900 mb-4">@Model.ViewName</h1>
+            @:<div class="max-w-2xl mx-auto">
+                @:<div class="bg-white shadow-lg rounded-lg p-8">
+                    @:<div class="flex justify-center mb-6">
+                        @:<div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
+                            @:<svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                @:<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            @:</svg>
+                        @:</div>
+                    @:</div>
+                    @:<h2 class="text-2xl font-semibold text-gray-900 mb-4">Empty View Template</h2>
+                    @:<p class="text-gray-600 mb-6">This is an empty view template ready for your content. You can start building your page here.</p>
+                    @:<div class="space-y-4">
+                        @:<div class="bg-blue-50 border border-blue-200 rounded-md p-4">
+                            @:<div class="flex">
+                                @:<div class="flex-shrink-0">
+                                    @:<svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        @:<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                    @:</svg>
+                                @:</div>
+                                @:<div class="ml-3">
+                                    @:<h3 class="text-sm font-medium text-blue-800">Getting Started</h3>
+                                    @:<div class="mt-2 text-sm text-blue-700">
+                                        @:<p>Replace this content with your own HTML and Razor markup. This template includes Tailwind CSS for styling.</p>
+                                    @:</div>
+                                @:</div>
+                            @:</div>
+                        @:</div>
+                    @:</div>
+                @:</div>
+            @:</div>
+        @:</div>
+    @:</div>
+@:</div>
 @:
     }
     else
@@ -32,12 +68,61 @@
 @:
 @:<!DOCTYPE html>
 @:
-@:<html>
+@:<html lang="en">
 @:<head>
-    @:<meta name="viewport" content="width=device-width" />
+    @:<meta charset="utf-8" />
+    @:<meta name="viewport" content="width=device-width, initial-scale=1.0" />
     @:<title>@Model.ViewName</title>
+    @:<script src="https://cdn.tailwindcss.com"></script>
+    @:<script>
+        @:tailwind.config = {
+            @:theme: {
+                @:extend: {
+                    @:colors: {
+                        @:primary: {
+                            @:50: '#eff6ff',
+                            @:500: '#3b82f6',
+                            @:600: '#2563eb',
+                            @:700: '#1d4ed8',
+                        @:}
+                    @:}
+                @:}
+            @:}
+        @:}
+    @:</script>
 @:</head>
-@:<body>
+@:<body class="bg-gray-50 min-h-screen">
+    @:<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        @:<div class="max-w-2xl w-full space-y-8">
+            @:<div class="text-center">
+                @:<div class="mx-auto h-16 w-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                    @:<svg class="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        @:<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    @:</svg>
+                @:</div>
+                @:<h1 class="text-4xl font-bold text-gray-900 mb-4">@Model.ViewName</h1>
+                @:<div class="bg-white shadow-xl rounded-lg p-8">
+                    @:<h2 class="text-2xl font-semibold text-gray-900 mb-4">Empty View Template</h2>
+                    @:<p class="text-gray-600 mb-6">This is an empty view template ready for your content. You can start building your page here.</p>
+                    @:<div class="bg-blue-50 border border-blue-200 rounded-md p-4">
+                        @:<div class="flex">
+                            @:<div class="flex-shrink-0">
+                                @:<svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    @:<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                @:</svg>
+                            @:</div>
+                            @:<div class="ml-3">
+                                @:<h3 class="text-sm font-medium text-blue-800">Getting Started</h3>
+                                @:<div class="mt-2 text-sm text-blue-700">
+                                    @:<p>Replace this content with your own HTML and Razor markup. This template includes Tailwind CSS for styling.</p>
+                                @:</div>
+                            @:</div>
+                        @:</div>
+                    @:</div>
+                @:</div>
+            @:</div>
+        @:</div>
+    @:</div>
     }
     if (Model.ReferenceScriptLibraries)
     {

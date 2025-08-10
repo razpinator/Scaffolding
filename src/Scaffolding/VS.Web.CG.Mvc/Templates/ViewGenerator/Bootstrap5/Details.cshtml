@@ -18,7 +18,7 @@
         }
 @:}
 @:
-@:<h1>@Model.ViewName</h1>
+@:<h1 class="text-3xl font-bold text-gray-900 mb-6">@Model.ViewName</h1>
 @:
     }
     else
@@ -33,16 +33,24 @@
 @:<head>
     @:<meta name="viewport" content="width=device-width" />
     @:<title>@Model.ViewName</title>
+    @:<script src="https://cdn.tailwindcss.com"></script>
 @:</head>
-@:<body>
+@:<body class="bg-gray-50">
+@:<div class="container mx-auto px-4 py-8">
 @:
         //    PushIndent("    ");
     }
 }
-<div>
-    <h4>@Model.ViewDataTypeShortName</h4>
-    <hr />
-    <dl class="row">
+
+<div class="bg-white shadow-lg rounded-lg overflow-hidden">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-4">
+        <h4 class="text-xl font-semibold text-white">@Model.ViewDataTypeShortName Details</h4>
+    </div>
+    
+    <!-- Content -->
+    <div class="px-6 py-6">
+        <div class="space-y-1">
 @{
     Dictionary<string, IPropertyMetadata> propertyLookup = ((IModelMetadata)Model.ModelMetadata).Properties.ToDictionary(x => x.PropertyName, x => x);
     Dictionary<string, INavigationMetadata> navigationLookup = ((IModelMetadata)Model.ModelMetadata).Navigations.ToDictionary(x => x.AssociationPropertyName, x => x);
@@ -52,47 +60,91 @@
         if (propertyLookup.TryGetValue(item.Name, out IPropertyMetadata property)
             && property.Scaffold && !property.IsForeignKey && !property.IsPrimaryKey)
         {
-        <dt class = "col-sm-2">
-            @@Html.DisplayNameFor(model => model.@GetValueExpression(property))
-        </dt>
-        <dd class = "col-sm-10">
-            @@Html.DisplayFor(model => model.@GetValueExpression(property))
-        </dd>
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 py-4 border-b border-gray-100 hover:bg-gray-50 transition-colors duration-150">
+            <div class="lg:col-span-1">
+                <dt class="text-sm font-semibold text-gray-900 uppercase tracking-wide">
+                    @@Html.DisplayNameFor(model => model.@GetValueExpression(property))
+                </dt>
+            </div>
+            <div class="lg:col-span-3">
+                <dd class="text-gray-700 text-sm sm:text-base">
+                    @@Html.DisplayFor(model => model.@GetValueExpression(property))
+                </dd>
+            </div>
+        </div>
         }
         else if (navigationLookup.TryGetValue(item.Name, out INavigationMetadata navigation))
         {
-        <dt class = "col-sm-2">
-            @@Html.DisplayNameFor(model => model.@GetValueExpression(navigation))
-        </dt>
-        <dd class = "col-sm-10">
-            @@Html.DisplayFor(model => model.@GetValueExpression(navigation).@navigation.DisplayPropertyName)
-        </dd>
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 py-4 border-b border-gray-100 hover:bg-gray-50 transition-colors duration-150">
+            <div class="lg:col-span-1">
+                <dt class="text-sm font-semibold text-gray-900 uppercase tracking-wide">
+                    @@Html.DisplayNameFor(model => model.@GetValueExpression(navigation))
+                </dt>
+            </div>
+            <div class="lg:col-span-3">
+                <dd class="text-gray-700 text-sm sm:text-base">
+                    @@Html.DisplayFor(model => model.@GetValueExpression(navigation).@navigation.DisplayPropertyName)
+                </dd>
+            </div>
+        </div>
         }
     }
-}    </dl>
-</div>
-<div>
+}
+        </div>
+    </div>
+    
+    <!-- Action Buttons -->
+    <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
+        <div class="flex flex-wrap items-center gap-4">
 @{
     string pkName = GetPrimaryKeyName();
     if (pkName != null)
     {
-    @:<a asp-action="Edit" asp-route-id="@@Model?.@pkName">Edit</a> |
-    @:<a asp-action="Index">Back to List</a>
+    @:<a asp-action="Edit" asp-route-id="@@Model?.@pkName" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+        @:<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            @:<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+        @:</svg>
+        @:Edit
+    @:</a>
+    @:<span class="text-gray-400">|</span>
+    @:<a asp-action="Index" class="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm font-medium transition duration-200">
+        @:<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            @:<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        @:</svg>
+        @:Back to List
+    @:</a>
     }
     else
     {
-    @:@@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @:<a asp-action="Index">Back to List</a>
+    @:<a href="@@Url.Action("Edit", new { /* id = Model.PrimaryKey */ })" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+        @:<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            @:<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+        @:</svg>
+        @:Edit
+    @:</a>
+    @:<span class="text-gray-400">|</span>
+    @:<a asp-action="Index" class="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm font-medium transition duration-200">
+        @:<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            @:<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        @:</svg>
+        @:Back to List
+    @:</a>
     }
-}</div>
+}
+        </div>
+    </div>
+</div>
+
 @{
     if (!Model.IsPartialView && !Model.IsLayoutPageSelected)
     {
         //ClearIndent();
+@:</div>
 @:</body>
 @:</html>
     }
 }
+
 @functions
 {
     string GetPrimaryKeyName()
